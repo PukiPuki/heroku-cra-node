@@ -8,7 +8,14 @@ const PORT = process.env.PORT || 5000;
 const { Client } = require('pg');
 
 const databaseURL = process.env.DATABASE_URL;
-const client = new Client();
+const config = {
+    host: 'localhost',
+    port: 5432,
+    user: 'nnjquhqhcsmbzg',
+    password: 'ee407a056d0aa6ed4587a1aabee57672261bb4bc55addf7d78c018ca4dc133ee',
+    database: 'daq5hqoilto32t',
+}
+const client = new Client(config);
 
 // Multi-process to utilize all CPU cores.
 if (cluster.isMaster) {
@@ -32,7 +39,9 @@ if (cluster.isMaster) {
   // Answer API requests.
   app.get('/api', function (req, res) {
 
-      client.connect();
+      client.connect(
+
+      );
       client.query('SELECT * FROM core_bids', (err, result) => {
           console.log(err ? err.stack : result.rows[0].message) // Hello World!
           res.send(result.rows[0].message);
