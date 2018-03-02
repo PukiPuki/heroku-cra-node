@@ -1,0 +1,1 @@
+env PGUSER=nnjquhqhcsmbzg PGHOST=ec2-174-129-26-203.compute-1.amazonaws.com PGPASSWORD=ee407a056d0aa6ed4587a1aabee57672261bb4bc55addf7d78c018ca4dc133ee PGDATABASE=daq5hqoilto32t PGPORT=5432

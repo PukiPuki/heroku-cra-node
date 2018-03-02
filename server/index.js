@@ -5,6 +5,11 @@ const numCPUs = require('os').cpus().length;
 
 const PORT = process.env.PORT || 5000;
 
+const { Client } = require('pg');
+
+const databaseURL = process.env.DATABASE_URL;
+const client = new Client();
+
 // Multi-process to utilize all CPU cores.
 if (cluster.isMaster) {
   console.error(`Node cluster master ${process.pid} is running`);
@@ -26,8 +31,17 @@ if (cluster.isMaster) {
 
   // Answer API requests.
   app.get('/api', function (req, res) {
-    res.set('Content-Type', 'application/json');
-    res.send('{"message":"Hello from the custom server!"}');
+
+      client.connect();
+      client.query('SELECT * FROM core_bids', (err, result) => {
+          console.log(err ? err.stack : result.rows[0].message) // Hello World!
+          res.send(result.rows[0].message);
+          client.end()
+      })
+
+  });
+
+  app.get('/api/test', function (req, res) {
   });
 
   // All remaining requests return the React app, so it can handle routing.
